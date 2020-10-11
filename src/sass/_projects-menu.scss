@@ -1,0 +1,43 @@
+.projects-menu {
+    width: 25%;
+    height: 100%;
+    border-right: 1px solid black;
+
+
+
+    &__menu {
+        width: 100%;
+        height: 90%;
+        padding-top: 15px;
+    }
+
+    &__title {
+        font-size: 2.5rem;
+        text-align: center;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    &__button {
+        width: 100%;
+        height: 10%;
+        font-family: $font-family;
+        font-size: 2rem;
+        border: none;
+        margin: 0;
+        background-color: $first-color;
+        // text-transform: uppercase;
+
+        &:hover {
+            background-color: lighten($first-color, 20%);
+            font-size: 2.2rem;
+        }
+    }
+
+    &__project {
+        width: 90%;
+        margin: 0 auto;
+
+    }
+}

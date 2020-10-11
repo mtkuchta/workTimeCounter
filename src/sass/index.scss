@@ -1,6 +1,25 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;700&display=swap');
+@import 'variables';
+@import 'reset';
+@import 'projects-menu';
+@import 'project';
+@import 'active-tasks';
 
-// 'font-family: 'Manrope', sans-serif;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 html {
-    font-family: 'Manrope';
+    font-family: $font-family;
+    font-size: $font-size;
+}
+
+.wrapper {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    // overflow: hidden;
 }

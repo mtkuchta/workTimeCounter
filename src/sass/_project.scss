@@ -1,0 +1,74 @@
+.project {
+    background-color: $project-color;
+    box-shadow: 0 0 2px $project-color;
+    position: relative;
+    padding: 5px 0;
+
+    &__container {
+        // display: none;
+    }
+
+    &__title {
+        display: block;
+        line-height: 3rem;
+        font-size: 1.8rem;
+        padding-left: 10px;
+    }
+
+    .expand {
+        position: absolute;
+        right: 5%;
+        top: 10px;
+        transform: rotate(0);
+        font-size: 2rem;
+        color: white;
+
+        &:hover {
+            transform: rotateX(180deg);
+        }
+    }
+
+    &__task-list {
+        // display: none;
+        width: 100%;
+        font-size: 1.5rem;
+        margin: 15px 0;
+        padding: 0 10px;
+    }
+
+    &__task {
+        display: flex;
+        justify-content: space-between;
+        line-height: 2rem;
+        background-color: lighten($project-color, 30%);
+        margin: 5px;
+        padding: 8px;
+    }
+
+    .add {
+        line-height: 2rem;
+        color: gray;
+        cursor: pointer;
+
+        &:hover {
+            color: $first-color;
+        }
+    }
+
+    &__button {
+        width: 100%;
+        font-family: $font-family;
+        font-size: 1.5rem;
+        border: none;
+        padding: 10px;
+        margin: 0;
+        background-color: darken($project-color, 20%);
+
+        &:hover {
+            background-color: darken($project-color, 10%);
+            color: white;
+        }
+
+    }
+
+}

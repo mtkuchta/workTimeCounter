@@ -5,11 +5,51 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Aplikacja</title>
+  <meta name="author" content="Mateusz Kuchta">
+  <title>Licznik czasu pracy</title>
+  <script src="https://kit.fontawesome.com/56705bb8ba.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
+  <div class="wrapper">
+    <aside class="projects-menu">
+        <section class="projects-menu__menu">
+          <h1 class="projects-menu__title">Projekty</h1>
+          <div class="projects-menu__project project">
+            <h2 class="project__title">Nazwa projektu</h2>
+            <span class="fas fa-caret-down expand"></span>
+            <div class="project__container">
+              <ul class="project__task-list">
+                <li class="project__task">
+                  <h3 class="project__task-title">Zadanie 1</h3>
+                  <span class="fas fa-user-clock add"></span>
+                </li>
+              </ul>
+              <button class="project__button">Dodaj zadanie</button>
+            </div>
+          </div>
 
+        </section>
+        <button class="projects-menu__button">Dodaj projekt</button>
+
+    </aside>
+
+    <main class="active-tasks">
+      <h1 class="active-tasks__title">Aktywne zadania</h1>
+      <section class="active-task__tasks">
+
+      </section>
+      
+     <section class="active-tasks__summary">
+       <button class="active-tasks__break">Przerwa</button>
+       <button class="active-tasks__pass">Przepustka</button>
+       <div class="active-tasks__statistics"></div>
+     </section>
+
+
+    </main>
+
+  </div>
 </body>
 
 </html>
