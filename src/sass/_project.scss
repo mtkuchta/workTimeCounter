@@ -3,9 +3,18 @@
     box-shadow: 0 0 2px $project-color;
     position: relative;
     padding: 5px 0;
+    margin-bottom: 10px;
 
     &__container {
-        // display: none;
+        // min-height: 10%;
+        display: none;
+
+    }
+
+    &__container.open {
+        min-height: 10%;
+        display: block;
+
     }
 
     &__title {
@@ -22,10 +31,11 @@
         transform: rotate(0);
         font-size: 2rem;
         color: white;
+        cursor: pointer;
+    }
 
-        &:hover {
-            transform: rotateX(180deg);
-        }
+    .expand.open {
+        transform: rotateX(180deg);
     }
 
     &__task-list {
@@ -54,6 +64,23 @@
             color: $first-color;
         }
     }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-top: 1px solid gray;
+    }
+
+    &__newTaskInp {
+        width: 90%;
+        font-size: 1.5rem;
+        line-height: 2rem;
+        margin: 10px auto;
+        padding: 5px 10px 5px 0;
+
+    }
+
 
     &__button {
         width: 100%;
