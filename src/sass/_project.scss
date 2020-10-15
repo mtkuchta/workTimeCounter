@@ -34,7 +34,26 @@
         font-size: 2rem;
         color: white;
         cursor: pointer;
+
+        &:hover {
+            color: gray;
+        }
     }
+
+    .delete-project {
+        position: absolute;
+        right: 12%;
+        top: 10px;
+        transform: rotate(0);
+        font-size: 1.5rem;
+        color: white;
+        cursor: pointer;
+
+        &:hover {
+            color: red;
+        }
+    }
+
 
     .expand.open {
         transform: rotateX(180deg);
@@ -59,7 +78,6 @@
     &__task-title {
         width: 80%;
         overflow-wrap: break-word;
-        // height: 100px;
     }
 
     .add {
@@ -68,7 +86,17 @@
         cursor: pointer;
 
         &:hover {
-            color: $first-color;
+            color: green;
+        }
+    }
+
+    .delete-task {
+        color: gray;
+        cursor: pointer;
+
+        &:hover {
+            color: red;
+            ;
         }
     }
 
@@ -76,26 +104,29 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        border-top: 1px solid gray;
+        // border-top: 1px solid gray;
     }
 
     &__newTaskInp {
-        width: 90%;
+        width: 95%;
         font-size: 1.5rem;
         line-height: 2rem;
         margin: 10px auto;
-        padding: 5px 10px 5px 0;
+        padding: 5px 10px 5px 10px;
+        border: none;
+        border-bottom: 1px solid $project-color;
+        background-color: transparent;
 
     }
 
 
     &__button {
-        width: 100%;
+        width: 95%;
         font-family: $font-family;
         font-size: 1.5rem;
         border: none;
         padding: 10px;
-        margin: 0;
+        margin: 0 auto;
         background-color: darken($project-color, 20%);
 
         &:hover {

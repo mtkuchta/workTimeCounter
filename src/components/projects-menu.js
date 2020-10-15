@@ -34,6 +34,7 @@
             `
             <h2 class="project__title">${project.name}</h2>
              <span class="fas fa-caret-down expand ${project.isActive ===true? 'open': '' }"></span>
+             <span class="fas fa-trash-alt delete-project"></span>
              <div class="project__container ${project.isActive ===true? 'open': '' }" data-index="${project.dataIndex}">
                      <ul class="project__task-list">
                       
@@ -47,18 +48,22 @@
             projectsList.appendChild(newProject)
             this.addListenersToProject(newProject)
             this.populateTasks(this.projects)
+            
         })
 
     }
 
     addListenersToProject(project){
         const expandBtn = project.querySelector('.expand');
+        const deleteProjectBtn = project.querySelector('.delete-project');
         const addTaskForm = project.querySelector('.project__form');
         expandBtn.addEventListener('click', (e)=>this.showTasks(e));
         addTaskForm.addEventListener('submit', (e)=>this.addTask(
             e,
             addTaskForm.elements.newTask.value
-            ))
+            ));
+
+        deleteProjectBtn.addEventListener('click', (e)=>this.deleteProject(e))
     }
 
     showTasks(e){
@@ -91,23 +96,59 @@
 
     }
 
+    addListenersToTasks(){
+        const deleteTaskBtns = document.querySelectorAll('.delete-task')
+        deleteTaskBtns.forEach(btn=>btn.addEventListener('click', (e)=>this.deleteTask(e)))
+    }
+
     populateTasks(projects=[]){
 
         const projectsElements = document.querySelectorAll('.project')
         projectsElements.forEach((item,index)=>{
             const ul = item.querySelector('ul');
             ul.textContent='';
-            projects[index].tasks.forEach(task=>{
+            projects[index].tasks.forEach((task, taskIndex)=>{
                 const li = document.createElement('li');
+                li.setAttribute('data-index',`${taskIndex}`)
                 li.classList.add('project__task');
                 li.innerHTML=
                 `
                 <h3 class="project__task-title">${task}</h3>
                 <span class="fas fa-user-clock add"></span>
+                <span class="fas fa-trash-alt delete-task"></span>
                     `
                  ul.appendChild(li)
             });       
         });
+
+        this.addListenersToTasks();
+
+        
+    }
+
+    deleteProject(e){
+        const projectToDelete = e.target.parentElement.dataset.index;
+        this.projects.splice(projectToDelete,1);
+        this.projectsRenumber(this.projects);
+        this.populateProjects(this.projects, this.projectsList);
+ 
+    }
+
+    deleteTask(e){
+        const taskToDelete = e.target.parentElement;
+        const taskToDeleteIndex = e.target.parentElement.dataset.index;      
+        const activeProjectIndex = taskToDelete.parentElement.parentElement.dataset.index;
+        this.projects[activeProjectIndex].tasks.splice(taskToDeleteIndex,1);
+        this.populateTasks(this.projects);
+        localStorage.setItem('projects', JSON.stringify(this.projects));
+        
+    }
+
+    projectsRenumber(projects){
+       projects.map((project,index)=>{
+           project.dataIndex = index;
+       });
+       localStorage.setItem('projects', JSON.stringify(this.projects));
     }
 }
 
