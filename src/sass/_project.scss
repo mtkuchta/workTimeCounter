@@ -22,6 +22,8 @@
         line-height: 3rem;
         font-size: 1.8rem;
         padding-left: 10px;
+        width: 85%;
+        overflow-wrap: break-word;
     }
 
     .expand {
@@ -39,7 +41,6 @@
     }
 
     &__task-list {
-        // display: none;
         width: 100%;
         font-size: 1.5rem;
         margin: 15px 0;
@@ -53,6 +54,12 @@
         background-color: lighten($project-color, 30%);
         margin: 5px;
         padding: 8px;
+    }
+
+    &__task-title {
+        width: 80%;
+        overflow-wrap: break-word;
+        // height: 100px;
     }
 
     .add {

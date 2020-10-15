@@ -89,7 +89,6 @@
         localStorage.setItem('projects', JSON.stringify(this.projects));
         this.populateProjects(this.projects, this.projectsList)
 
-        
     }
 
     populateTasks(projects=[]){
