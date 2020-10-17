@@ -1,13 +1,22 @@
+import { ActiveTasks } from "./active-tasks";
+
  class ProjectsMenu{
     constructor(){
         this.projectsList = document.querySelector('.project-menu__list');
         this.projects=JSON.parse(localStorage.getItem('projects')) || [];
         this.populateProjects(this.projects,this.projectsList);
+        this.activeTasks = new ActiveTasks();
     }
 
     addProject(e, newProject){
         e.preventDefault()
         const input = document.querySelector('.projects-menu__input-project')
+        const isExisted = this.projects.find(project => project.name.toUpperCase() === newProject.toUpperCase()) ? true:false;
+        if(isExisted) {
+            input.value= '';
+            return alert("Projekt o takiej nazwie już istnieje !")
+        }
+       
         const project = {
             name: newProject,
             dataIndex: this.projects.length ,
@@ -86,10 +95,24 @@
     addTask(e,newTask){
         e.preventDefault()
         const projectIndex = e.target.parentElement.dataset.index;
-        this.projects[projectIndex].tasks.push(newTask);
-
+        const isExisted = this.projects[projectIndex].tasks.find(task=> task.name.toUpperCase()===newTask.toUpperCase()) ? true: false;
         const input = e.target;
+        if(isExisted) {
+            input.querySelector('.project__newTaskInp').value=''; 
+            return alert("Zadanie o takiej nazwie zostało już zdefiniowane !")
+        }
+        console.log(isExisted)
+        const newTaskObj= {
+            name: newTask,
+            index: this.projects[projectIndex].tasks.length,
+            startTime: 0,
+            isActive:false
+        }
+        this.projects[projectIndex].tasks.push(newTaskObj);
+
+        // const input = e.target;
         input.querySelector('.project__newTaskInp').value=''; 
+
         //add to local storage
         localStorage.setItem('projects', JSON.stringify(this.projects));
         this.populateProjects(this.projects, this.projectsList)
@@ -97,8 +120,11 @@
     }
 
     addListenersToTasks(){
-        const deleteTaskBtns = document.querySelectorAll('.delete-task')
-        deleteTaskBtns.forEach(btn=>btn.addEventListener('click', (e)=>this.deleteTask(e)))
+        const deleteTaskBtns = document.querySelectorAll('.delete-task');
+        const addTaskBtns = document.querySelectorAll('.add');
+        deleteTaskBtns.forEach(btn=>btn.addEventListener('click', (e)=>this.deleteTask(e)));
+        addTaskBtns.forEach(btn=>btn.addEventListener('click', (e)=>this.addTaskToActive(e)));
+        
     }
 
     populateTasks(projects=[]){
@@ -109,11 +135,11 @@
             ul.textContent='';
             projects[index].tasks.forEach((task, taskIndex)=>{
                 const li = document.createElement('li');
-                li.setAttribute('data-index',`${taskIndex}`)
+                li.setAttribute('data-index',`${task.index}`)
                 li.classList.add('project__task');
                 li.innerHTML=
                 `
-                <h3 class="project__task-title">${task}</h3>
+                <h3 class="project__task-title">${task.name}</h3>
                 <span class="fas fa-user-clock add"></span>
                 <span class="fas fa-trash-alt delete-task"></span>
                     `
@@ -149,6 +175,13 @@
            project.dataIndex = index;
        });
        localStorage.setItem('projects', JSON.stringify(this.projects));
+    }
+
+    addTaskToActive(e){
+        const task = e.target.parentElement;
+        const projectIndex = task.parentElement.parentElement.dataset.index;
+        this.activeTasks.activeTasks.push(this.projects[projectIndex]);
+        
     }
 }
 
