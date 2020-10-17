@@ -1,0 +1,58 @@
+.active-task {
+    width: 25%;
+    height: 40%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    background-color: lighten($project-color, 25%);
+    font-size: 1.5rem;
+    padding: 10px 15px;
+    margin: 0 20px;
+
+    &__project-name {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    &__task-name {
+        width: 100%;
+        margin: 5px 0;
+    }
+
+    &__counter {
+        height: 30%;
+        width: 75%;
+        display: flex;
+        justify-content: space-evenly;
+        border-top: 1px solid $project-color;
+        margin: 15px auto;
+        padding: 0 20px;
+
+        & span {
+            font-size: 4rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+
+    &__button-count {
+        width: 90%;
+        margin: 0 auto;
+        box-shadow: 0 0 2px $project-color;
+        // text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+}
+
+.time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: 30%;
+    font-size: 4rem;
+    line-height: 4.5rem;
+    text-align: center;
+    margin: auto 0;
+}

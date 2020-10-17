@@ -2,6 +2,7 @@
 //     message,
 //     messageDOM
 // } from './tools/message';
+import{ActiveTasks} from './components/active-tasks.js'
 import {ProjectsMenu} from './components/projects-menu.js'
 import './sass/index.scss';
 
