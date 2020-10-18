@@ -21,7 +21,7 @@ import { ActiveTasks } from "./active-tasks";
             name: newProject,
             dataIndex: this.projects.length ,
             tasks:[],
-            isActive:false,
+            isOpen:false,
         };
 
         input.value= '';
@@ -42,9 +42,9 @@ import { ActiveTasks } from "./active-tasks";
             newProject.innerHTML =
             `
             <h2 class="project__title">${project.name}</h2>
-             <span class="fas fa-caret-down expand ${project.isActive ===true? 'open': '' }"></span>
+             <span class="fas fa-caret-down expand ${project.isOpen ===true? 'open': '' }"></span>
              <span class="fas fa-trash-alt delete-project"></span>
-             <div class="project__container ${project.isActive ===true? 'open': '' }" data-index="${project.dataIndex}">
+             <div class="project__container ${project.isOpen ===true? 'open': '' }" data-index="${project.dataIndex}">
                      <ul class="project__task-list">
                       
                      </ul>
@@ -79,10 +79,10 @@ import { ActiveTasks } from "./active-tasks";
         const btn = e.target;
         const projectIndex =e.target.parentElement.dataset.index;
 
-        if(this.projects[projectIndex].isActive === false){
-            this.projects[projectIndex].isActive=true;
+        if(this.projects[projectIndex].isOpen === false){
+            this.projects[projectIndex].isOpen=true;
         }else{
-            this.projects[projectIndex].isActive=false;
+            this.projects[projectIndex].isOpen=false;
         }
 
         const parent = btn.parentElement;
@@ -105,6 +105,7 @@ import { ActiveTasks } from "./active-tasks";
         const newTaskObj= {
             name: newTask,
             index: this.projects[projectIndex].tasks.length,
+            task_id: `${this.projects[projectIndex].name}_${this.projects[projectIndex].tasks.length}`,
             startTime: 0,
             isActive:false
         }
@@ -179,8 +180,9 @@ import { ActiveTasks } from "./active-tasks";
 
     addTaskToActive(e){
         const task = e.target.parentElement;
+        const taskIndex= task.dataset.index;
         const projectIndex = task.parentElement.parentElement.dataset.index;
-        this.activeTasks.activeTasks.push(this.projects[projectIndex]);
+        this.activeTasks.addActiveTask(this.projects[projectIndex], taskIndex);
         
     }
 }
