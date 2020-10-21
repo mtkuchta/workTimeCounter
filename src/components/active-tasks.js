@@ -4,7 +4,11 @@ class ActiveTasks{
     this.activeTasksList = document.querySelector('.active-tasks__tasks');
     this.breakBtn = document.querySelector('.active-tasks__break');
     this.populateActiveTasks(this.activeTasks)
-
+    this.isRunning = false;
+    // this.timerTask ='';
+    this.interval=false;
+    // this.time=0;
+    this.change=true;
 
     }
 
@@ -19,7 +23,8 @@ class ActiveTasks{
                 taskName: activeProject.tasks[taskIndex].name,
                 taskIndex: activeProject.tasks[taskIndex].index,
                 taskID: activeProject.tasks[taskIndex].task_id,
-                isRunning: false
+                isRunning: false,
+                time:0
             };
 
             this.activeTasks.push(newActiveTask);
@@ -58,11 +63,61 @@ class ActiveTasks{
     }
     addCountListeners(){
             const countBtnList = document.querySelectorAll('.active-task__button-count')
-            countBtnList.forEach(btn => btn.addEventListener('click', (e)=> this.countTime(e)))
+            countBtnList.forEach(btn => btn.addEventListener('click', (e)=> this.startCount(e)))
     }
 
-  countTime(e){
-      console.log(e.target.parentElement)
+    timer(e){
+      this.change=false;
+      const countedTaskContainer = e.target.parentElement;
+      const countedTaskId = countedTaskContainer.dataset.id;
+      const countedTask = this.activeTasks.find(task=> task.taskID === countedTaskId)
+      countedTask.isRunning =true;
+
+      let time = countedTask.time
+
+      this.interval = setInterval(()=>{
+          if(countedTask.isRunning){
+            time++
+            countedTask.time= time;
+            // console.log(countedTask.time);
+            this.showTime(countedTaskContainer, countedTask.time)
+          }
+      },1000);
+    }
+
+  startCount(e){
+    const countedTaskContainer = e.target.parentElement;
+    const countedTaskId = countedTaskContainer.dataset.id;
+    const countedTask = this.activeTasks.find(task=> task.taskID === countedTaskId)
+
+    if(countedTask.isRunning){
+      return;
+    }else{
+      this.activeTasks.forEach(task=>task.isRunning=false)
+      countedTask.isRunning=true;
+
+      this.change=!this.change
+      if(this.change){
+          clearInterval(this.interval);
+          this.timer(e);
+      }else{
+        this.timer(e)
+      }
+    }
+  }
+
+  showTime(activeContainer,time){
+    const divSeconds = activeContainer.querySelector('.active-task__seconds');
+    const divMinutes = activeContainer.querySelector('.active-task__minutes');
+    const divHours = activeContainer.querySelector('.active-task__hours');
+
+
+    let hours = Math.floor(time / 3600);
+    let minutes = Math.floor((time % 3600)/60);
+    let seconds = time % 60;
+    divSeconds.textContent = seconds <10 ? `0${seconds}`: `${seconds}`;
+    divMinutes.textContent = minutes <10 ? `0${minutes}`: `${minutes}`;
+
   }
 
 }
