@@ -185,6 +185,7 @@ import { ActiveTasks } from "./active-tasks";
         this.activeTasks.addActiveTask(this.projects[projectIndex], taskIndex);
         
     }
+
 }
 
 export{ProjectsMenu};
