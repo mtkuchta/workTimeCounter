@@ -47,6 +47,7 @@
         border: 2px solid transparent;
         // text-transform: uppercase;
         letter-spacing: 1px;
+        transition: $button-transition;
 
 
         &:hover {

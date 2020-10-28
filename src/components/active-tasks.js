@@ -3,14 +3,15 @@ class ActiveTasks{
     this.activeTasks=JSON.parse(localStorage.getItem('activeTasks')) || [{projName:"break", taskID:0, isRunning:false, time:0}];
     this.activeTasksList = document.querySelector('.active-tasks__tasks');
     this.breakBtn = document.querySelector('.active-tasks__break');
+    this.dayEndBtn = document.querySelector('.active-tasks__day-end');
     this.populateActiveTasks(this.activeTasks);
     this.countBtns=document.querySelectorAll('.active-task__button-count');
     this.breakShow=document.querySelector('.active-tasks__break-time');
-    this.isRunning = false;
+    // this.isRunning = false;
     this.interval=false;
     this.change=true;
-
     this.breakBtn.addEventListener('click', (e)=>this.startCount(e))
+    this.dayEndBtn.addEventListener('click', (e) => this.statistics(e))
 
     }
 
@@ -93,7 +94,7 @@ class ActiveTasks{
       },1000);
     }
 
-  startCount(e){
+    startCount(e){
     this.countBtns.forEach(btn=>btn.disabled=false);
     this.breakBtn.disabled=false;
     e.target.disabled=true;
@@ -137,9 +138,9 @@ class ActiveTasks{
     }
     }
 
-  }
+   }
 
-  showTime(activeContainer,time){
+    showTime(activeContainer,time){
     const divSeconds = activeContainer.querySelector('.active-task__seconds');
     const divMinutes = activeContainer.querySelector('.active-task__minutes');
     const divHours = activeContainer.querySelector('.active-task__hours');
@@ -152,16 +153,54 @@ class ActiveTasks{
     divMinutes.textContent = minutes <10 ? `0${minutes}`: `${minutes}`;
     divHours.textContent = hours <10 ? `0${hours}`: `${hours}`;
 
-  }
+    }
 
-  showBreakTime(time){
-    let hours = Math.floor(time / 3600);
-    let minutes = Math.floor((time % 3600)/60);
-    let seconds = time % 60;
-    let hoursTxt = hours <10 ? `0${hours}`: `${hours}`;
-    let minutesTxt = minutes <10 ? `0${minutes}`: `${minutes}`;
-    let secondsTxt = seconds <10 ? `0${seconds}`: `${seconds}`;
-    this.breakShow.textContent= `Przerwa: ${hoursTxt}:${minutesTxt}:${secondsTxt}`
-}
+    showBreakTime(time){
+      let hours = Math.floor(time / 3600);
+      let minutes = Math.floor((time % 3600)/60);
+      let seconds = time % 60;
+      let hoursTxt = hours <10 ? `0${hours}`: `${hours}`;
+      let minutesTxt = minutes <10 ? `0${minutes}`: `${minutes}`;
+      let secondsTxt = seconds <10 ? `0${seconds}`: `${seconds}`;
+      this.breakShow.textContent= `Przerwa: ${hoursTxt}:${minutesTxt}:${secondsTxt}`;
+    }
+
+    statistics(e){
+      clearInterval(this.interval)
+      this.activeTasks.forEach(task=>task.isRunning=false);
+      this.activeTasks.forEach(task=>console.log(task.time));
+      const breakTime = this.activeTasks[0].time;
+      let workTime = 0
+
+      this.activeTasks.forEach((task,index)=>{
+        if(index ===0){
+          return
+        }else{
+          workTime += task.time;
+        }
+      })
+
+      const totalTime=workTime + breakTime;
+      const workTimeHours = Math.floor(workTime / 3600);
+      const workTimeMinutes = Math.floor((workTime % 3600)/60);
+      const totalTimeHours = Math.floor(totalTime / 3600);
+      const totalTimeMinutes = Math.floor((totalTime % 3600)/60);
+
+      const workTimeHoursTxt = workTimeHours<10?`0${workTimeHours}`: `${workTimeHours}`;
+      const workTimeHMinutesTxt = workTimeMinutes<10?`0${workTimeMinutes}`: `${workTimeMinutes}`;
+      const totalTimeHoursTxt = totalTimeHours<10?`0${totalTimeHours}`: `${totalTimeHours}`;
+      const totalTimeHMinutesTxt = totalTimeMinutes<10?`0${totalTimeMinutes}`: `${totalTimeMinutes}`;
+
+    
+
+      document.querySelector('.active-tasks__work-time').textContent = `Czas pracy: ${workTimeHours}h ${workTimeMinutes}m`;
+      document.querySelector('.active-tasks__total-time').textContent=`Całkowity czas: ${totalTimeHours}h ${totalTimeMinutes}m`;
+
+  
+
+    
+
+
+    }
 }
 export{ActiveTasks}

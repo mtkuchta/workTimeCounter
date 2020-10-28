@@ -49,6 +49,34 @@
         font-size: 2rem;
         padding: 0 15px;
     }
+
+    &__break {
+        background-color: $first-color;
+        transition: $button-transition;
+        box-shadow: 0 0 3px darken($first-color, 10%);
+
+        &:hover {
+            color: white;
+            background-color: darken($first-color, 10%);
+        }
+
+        &:disabled {
+            background-color: green;
+            color: white;
+        }
+    }
+
+    &__day-end {
+        background-color: $first-color;
+        box-shadow: 0 0 3px darken($first-color, 10%);
+
+        &:hover {
+            color: white;
+            background-color: darken($first-color, 10%);
+        }
+    }
+
+    ;
 }
 
 button {

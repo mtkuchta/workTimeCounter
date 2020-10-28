@@ -34,6 +34,7 @@
         font-size: 2rem;
         color: white;
         cursor: pointer;
+        transition: $button-transition;
 
         &:hover {
             color: gray;
@@ -48,6 +49,7 @@
         font-size: 1.5rem;
         color: white;
         cursor: pointer;
+        transition: $button-transition;
 
         &:hover {
             color: red;
@@ -84,6 +86,7 @@
         line-height: 2rem;
         color: gray;
         cursor: pointer;
+        transition: $button-transition;
 
         &:hover {
             color: green;
@@ -93,6 +96,7 @@
     .delete-task {
         color: gray;
         cursor: pointer;
+        transition: $button-transition;
 
         &:hover {
             color: red;
@@ -105,7 +109,6 @@
         flex-direction: column;
         justify-content: space-between;
         min-height: 95px;
-        // border-top: 1px solid gray;
     }
 
     &__newTaskInp {
@@ -137,6 +140,7 @@
         padding: 10px;
         margin: 0 auto;
         background-color: darken($project-color, 20%);
+        transition: $button-transition;
 
         &:hover {
             background-color: darken($project-color, 10%);
