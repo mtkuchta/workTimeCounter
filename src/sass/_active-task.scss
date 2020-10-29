@@ -1,6 +1,6 @@
 .active-task {
     width: 30%;
-    min-width: 190px;
+    min-width: 200px;
     height: 40%;
     display: flex;
     justify-content: space-evenly;
@@ -9,6 +9,7 @@
     font-size: 1.5rem;
     padding: 10px 15px;
     margin: 0 20px;
+    box-shadow: 0 0 3px black;
 
     &__project-name {
         width: 100%;
@@ -42,17 +43,15 @@
 
     &__button-count {
         width: 90%;
+        height: 20%;
         margin: 0 auto;
-        box-shadow: 0 0 2px $project-color;
-        border: 2px solid transparent;
-        // text-transform: uppercase;
+        box-shadow: 0 0 2px black;
         letter-spacing: 1px;
         transition: $button-transition;
 
 
         &:hover {
-            // box-shadow: 0 0 4px green;
-            border: 2px solid green;
+            box-shadow: 0 0 5px darkgreen;
         }
 
         &:disabled {

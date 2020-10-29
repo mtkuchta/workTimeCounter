@@ -37,23 +37,25 @@
         width: 100%;
         height: 15%;
         display: flex;
-        flex-wrap: wrap;
+        justify-content: space-evenly;
+        flex-wrap: nowrap;
+        padding: 5px;
     }
 
     &__statistics {
-        height: 80%;
-        width: 100%;
+        height: 100%;
+        width: calc(50% - 10px);
         display: flex;
         flex-direction: column;
         justify-content: space-evenly;
         font-size: 2rem;
-        padding: 0 15px;
+        padding: 5px;
     }
 
     &__break {
         background-color: $first-color;
         transition: $button-transition;
-        box-shadow: 0 0 3px darken($first-color, 10%);
+        box-shadow: 0 0 3px black;
 
         &:hover {
             color: white;
@@ -68,15 +70,26 @@
 
     &__day-end {
         background-color: $first-color;
-        box-shadow: 0 0 3px darken($first-color, 10%);
+        box-shadow: 0 0 3px black;
 
         &:hover {
             color: white;
             background-color: darken($first-color, 10%);
         }
+
+        &:disabled {
+            background: green;
+            color: white;
+        }
     }
 
-    ;
+    &__reset {
+        width: calc(50% - 10px);
+        height: 80%;
+        margin: 10px 0;
+
+
+    }
 }
 
 button {

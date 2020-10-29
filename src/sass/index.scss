@@ -5,6 +5,7 @@
 @import 'project';
 @import 'active-task';
 @import 'active-tasks';
+@import 'warnings';
 
 
 * {
@@ -25,6 +26,7 @@ html {
     max-width: 1280px;
     display: flex;
     margin: 0 auto;
+    position: relative;
     // background-color: lightgray;
 
 

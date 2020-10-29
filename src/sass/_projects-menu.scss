@@ -39,7 +39,7 @@
         margin: 0 auto 15px;
         transition: $button-transition;
         background-color: $first-color;
-        box-shadow: 0 0 3px darken($first-color, 10%);
+        box-shadow: 0 0 3px black;
 
         &:hover {
             color: white;

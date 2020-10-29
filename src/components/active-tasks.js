@@ -11,11 +11,12 @@ class ActiveTasks{
     this.interval=false;
     this.change=true;
     this.breakBtn.addEventListener('click', (e)=>this.startCount(e))
-    this.dayEndBtn.addEventListener('click', (e) => this.statistics(e))
+    this.dayEndBtn.addEventListener('click', (e) => this.showWaraning())
 
     }
 
     addActiveTask(activeProject, taskIndex){
+      if(this.dayEndBtn.disabled) return
 
       const isExisted = this.activeTasks.find(task=> task.taskID === activeProject.tasks[taskIndex].task_id) ? true : false;
 
@@ -165,8 +166,32 @@ class ActiveTasks{
       this.breakShow.textContent= `Przerwa: ${hoursTxt}:${minutesTxt}:${secondsTxt}`;
     }
 
+    showWaraning(){
+      const warning = document.querySelector('.warning')
+      warning.classList.add('active');
+      const btns = warning.querySelectorAll('button');
+      btns.forEach(btn=>btn.addEventListener('click',(e)=> this.checkWarningResult(e)))
+    }
+
+    checkWarningResult(e){
+      if(e.target.dataset.result ==="yes") {
+        this.statistics();
+        
+      }else{
+        const warning = document.querySelector('.warning')
+        warning.classList.remove('active');
+        return;
+      }
+    }
+
     statistics(e){
+      const warning = document.querySelector('.warning')
+      warning.classList.remove('active');
       clearInterval(this.interval)
+      this.countBtns.forEach(btn=>btn.disabled=true);
+      this.breakBtn.disabled=true;
+      console.log(this.dayEndBtn);
+      this.dayEndBtn.disabled=true;
       this.activeTasks.forEach(task=>task.isRunning=false);
       this.activeTasks.forEach(task=>console.log(task.time));
       const breakTime = this.activeTasks[0].time;
@@ -191,15 +216,8 @@ class ActiveTasks{
       const totalTimeHoursTxt = totalTimeHours<10?`0${totalTimeHours}`: `${totalTimeHours}`;
       const totalTimeHMinutesTxt = totalTimeMinutes<10?`0${totalTimeMinutes}`: `${totalTimeMinutes}`;
 
-    
-
       document.querySelector('.active-tasks__work-time').textContent = `Czas pracy: ${workTimeHours}h ${workTimeMinutes}m`;
       document.querySelector('.active-tasks__total-time').textContent=`Całkowity czas: ${totalTimeHours}h ${totalTimeMinutes}m`;
-
-  
-
-    
-
 
     }
 }
