@@ -4,14 +4,19 @@ class ActiveTasks{
     this.activeTasksList = document.querySelector('.active-tasks__tasks');
     this.breakBtn = document.querySelector('.active-tasks__break');
     this.dayEndBtn = document.querySelector('.active-tasks__day-end');
+    this.resetBtn = document.querySelector('.active-tasks__reset');
     this.populateActiveTasks(this.activeTasks);
     this.countBtns=document.querySelectorAll('.active-task__button-count');
-    this.breakShow=document.querySelector('.active-tasks__break-time');
-    // this.isRunning = false;
+    this.breakShow=document.querySelector('.active-tasks__span-break');
     this.interval=false;
     this.change=true;
     this.breakBtn.addEventListener('click', (e)=>this.startCount(e))
-    this.dayEndBtn.addEventListener('click', (e) => this.showWaraning())
+    this.dayEndBtn.addEventListener('click', () => this.showWaraning(this.warningMessages[0]))
+    this.resetBtn.addEventListener('click', ()=>this.showWaraning(this.warningMessages[1]))
+    this.warningMessages=[
+      'Po zakończeniu dnia nie ma już możliwości liczenia czasu aktywnych zadań. Czy napewno chcesz zakończyć ?',
+      'Reset kasuje wszystkie aktywne zadania i zliczony czas. Czy napewno chcesz zresetować ?'
+    ]
 
     }
 
@@ -42,6 +47,7 @@ class ActiveTasks{
     }
 
     populateActiveTasks(tasks){
+        const activeTasks = document.querySelectorAll('.active-task');
         this.activeTasksList.textContent="";
         tasks.forEach(task => {
           if(task.projName==='break'){
@@ -67,7 +73,8 @@ class ActiveTasks{
           }
             
         });
-       this.addCountListeners()
+        if(this.activeTasks.length >1) this.addCountListeners()
+       
      
     }
     addCountListeners(){
@@ -85,6 +92,7 @@ class ActiveTasks{
           if(countedTask.isRunning){
             time++
             countedTask.time= time;
+            localStorage.setItem('activeTasks', JSON.stringify(this.activeTasks));
             if(e.target.dataset.id ==='break'){
               this.showBreakTime(countedTask.time);
             }else{
@@ -163,46 +171,65 @@ class ActiveTasks{
       let hoursTxt = hours <10 ? `0${hours}`: `${hours}`;
       let minutesTxt = minutes <10 ? `0${minutes}`: `${minutes}`;
       let secondsTxt = seconds <10 ? `0${seconds}`: `${seconds}`;
-      this.breakShow.textContent= `Przerwa: ${hoursTxt}:${minutesTxt}:${secondsTxt}`;
+      this.breakShow.textContent= `${hoursTxt}:${minutesTxt}:${secondsTxt}`;
     }
 
-    showWaraning(){
-      const warning = document.querySelector('.warning')
-      warning.classList.add('active');
+    showWaraning(message){
+    const warning = document.createElement('div');
+    warning.classList.add('warning', 'active');
+    warning.innerHTML=`
+   
+      <h1 class="warning__title">UWAGA !</h1>
+      <p class="warning__text">${message}</p>
+      <div class="warning__buttons">
+        <button class="warning__btn" data-result="yes">Tak</button>
+        <button class="warning__btn" data-result="no">Nie</button>
+
+    `
       const btns = warning.querySelectorAll('button');
       btns.forEach(btn=>btn.addEventListener('click',(e)=> this.checkWarningResult(e)))
+      const wrapper=document.querySelector('.wrapper');
+      wrapper.appendChild(warning)
     }
 
     checkWarningResult(e){
       if(e.target.dataset.result ==="yes") {
-        this.statistics();
-        
+        const isResetActive =!this.resetBtn.classList.contains('active');
+        if(isResetActive){
+          this.resetBtn.style.visibility ='visible';
+          this.resetBtn.classList.add('active');
+          const warning = document.querySelector('.warning')
+          warning.remove();
+          this.statistics(e);
+        }else{
+          const warning = document.querySelector('.warning');
+          warning.remove();
+          this.reset();
+        }
+       
       }else{
         const warning = document.querySelector('.warning')
-        warning.classList.remove('active');
-        return;
+        warning.remove();
       }
     }
 
-    statistics(e){
-      const warning = document.querySelector('.warning')
-      warning.classList.remove('active');
+    statistics(){
+
       clearInterval(this.interval)
       this.countBtns.forEach(btn=>btn.disabled=true);
       this.breakBtn.disabled=true;
-      console.log(this.dayEndBtn);
       this.dayEndBtn.disabled=true;
       this.activeTasks.forEach(task=>task.isRunning=false);
-      this.activeTasks.forEach(task=>console.log(task.time));
       const breakTime = this.activeTasks[0].time;
       let workTime = 0
-
       this.activeTasks.forEach((task,index)=>{
         if(index ===0){
           return
         }else{
           workTime += task.time;
+          return
         }
+
       })
 
       const totalTime=workTime + breakTime;
@@ -216,9 +243,23 @@ class ActiveTasks{
       const totalTimeHoursTxt = totalTimeHours<10?`0${totalTimeHours}`: `${totalTimeHours}`;
       const totalTimeHMinutesTxt = totalTimeMinutes<10?`0${totalTimeMinutes}`: `${totalTimeMinutes}`;
 
-      document.querySelector('.active-tasks__work-time').textContent = `Czas pracy: ${workTimeHours}h ${workTimeMinutes}m`;
-      document.querySelector('.active-tasks__total-time').textContent=`Całkowity czas: ${totalTimeHours}h ${totalTimeMinutes}m`;
+      document.querySelector('.active-tasks__span-work').textContent = `${workTimeHours}h ${workTimeMinutes}m`;
+      document.querySelector('.active-tasks__span-total').textContent=`${totalTimeHours}h ${totalTimeMinutes}m`;
+      return
+    }
 
+    reset(){ 
+        this.activeTasks.splice(1, this.activeTasks.length-1);
+        this.breakBtn.disabled = false;
+        this.dayEndBtn.disabled = false;
+        this.resetBtn.style.visibility ='hidden';
+        this.resetBtn.classList.remove('active');
+        localStorage.setItem('activeTasks', JSON.stringify(this.activeTasks));
+        this.populateActiveTasks(this.activeTasks);
+        document.querySelector('.active-tasks__span-work').textContent = `0h 0m`;
+        document.querySelector('.active-tasks__span-total').textContent=`0h 0m`;
+        document.querySelector('.active-tasks__span-break').textContent=`0h 0m`;
+        
     }
 }
 export{ActiveTasks}

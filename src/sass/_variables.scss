@@ -2,5 +2,7 @@ $font-family:'Manrope';
 $font-size: 10px;
 // $first-color:rgb(102, 133, 153);
 $first-color:rgb(153, 179, 230);
-$project-color: rgba(122, 122, 184, 0.5);
+// $project-color: rgba(122, 122, 184, 0.5);
+$project-color: darkgray;
+$task-color: lighten(darkorange, 10%);
 $button-transition: .2s;

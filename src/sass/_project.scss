@@ -4,7 +4,7 @@
     position: relative;
     padding: 5px 0;
     margin-bottom: 10px;
-    box-shadow: 0 0 3px black;
+    box-shadow: 0 0 6px black;
 
     &__container {
         // min-height: 10%;
@@ -25,6 +25,7 @@
         padding-left: 10px;
         width: 85%;
         overflow-wrap: break-word;
+        font-weight: bold;
     }
 
     .expand {
@@ -73,9 +74,10 @@
         display: flex;
         justify-content: space-between;
         line-height: 2rem;
-        background-color: lighten($project-color, 30%);
+        background-color: $task-color;
         margin: 5px;
         padding: 8px;
+        box-shadow: 0 0 2px black;
     }
 
     &__task-title {
@@ -85,7 +87,7 @@
 
     .add {
         line-height: 2rem;
-        color: gray;
+        color: lighten(black, 30%);
         cursor: pointer;
         transition: $button-transition;
 
@@ -95,7 +97,7 @@
     }
 
     .delete-task {
-        color: gray;
+        color: lighten(black, 30%);
         cursor: pointer;
         transition: $button-transition;
 
@@ -119,7 +121,7 @@
         margin: 10px auto;
         padding: 5px 10px 5px 10px;
         border: none;
-        border-bottom: 1px solid $project-color;
+        border-bottom: 1px solid gray;
         background-color: transparent;
 
         &:hover {
@@ -142,6 +144,7 @@
         margin: 0 auto;
         background-color: darken($project-color, 20%);
         transition: $button-transition;
+        box-shadow: 0 0 3px black;
 
         &:hover {
             background-color: darken($project-color, 10%);

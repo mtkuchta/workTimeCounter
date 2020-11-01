@@ -22,7 +22,10 @@
         flex-grow: 1;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-evenly;
+        justify-content: flex-start;
+        align-items: space-evenly;
+        overflow-y: auto;
+        padding-top: 10px;
     }
 
     &__buttons {
@@ -87,7 +90,14 @@
         width: calc(50% - 10px);
         height: 80%;
         margin: 10px 0;
+        background-color: $first-color;
+        box-shadow: 0 0 3px black;
+        visibility: hidden;
 
+        &:hover {
+            color: white;
+            background-color: darken($first-color, 10%);
+        }
 
     }
 }
