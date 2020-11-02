@@ -38,7 +38,8 @@ class ActiveTasks{
 
             this.activeTasks.push(newActiveTask);
             localStorage.setItem('activeTasks', JSON.stringify(this.activeTasks));
-            this.populateActiveTasks(this.activeTasks);
+            // this.populateActiveTasks(this.activeTasks);
+            this.populateNewActiveTask(newActiveTask)
 
            
         } else return alert("To zadanie już zostało dodane do aktywnych")
@@ -48,12 +49,46 @@ class ActiveTasks{
 
     populateActiveTasks(tasks){
         const activeTasks = document.querySelectorAll('.active-task');
-        this.activeTasksList.textContent="";
-        tasks.forEach(task => {
-          if(task.projName==='break'){
-            return
-          }else{
-            const div = document.createElement('div');
+        console.log(activeTasks);
+        if(activeTasks.length === 0){
+          this.activeTasksList.textContent="";
+          tasks.forEach(task => {
+            if(task.projName==='break'){
+              task.isRunning=false;
+              return
+            }else{
+              task.isRunning = false;
+              const div = document.createElement('div');
+              div.setAttribute('class', 'active-tasks__task active-task');
+              div.setAttribute('data-id', `${task.taskID}`)
+              div.innerHTML=`
+                  <h3 class="active-task__project-name">Projekt: ${task.projName} </h3>
+                  <h3 class="active-task__task-name">Zadanie: ${task.taskName} </h3>
+                  <section class="active-task__counter">
+                       <div class="active-task__hours time">00</div>
+                      <span>:</span>
+                      <div class="active-task__minutes time">00</div>
+                      <span>:</span>
+                       <div class="active-task__seconds time">00</div>
+                  </section>
+                   <button class="active-task__button-count">Licz czas</button>
+              
+              `
+              this.activeTasksList.appendChild(div);
+            }
+            if(this.activeTasks.length >1) this.addCountListeners()
+          });
+
+        }
+        
+        
+       
+     
+    }
+
+    populateNewActiveTask(task){
+
+      const div = document.createElement('div');
             div.setAttribute('class', 'active-tasks__task active-task');
             div.setAttribute('data-id', `${task.taskID}`)
             div.innerHTML=`
@@ -69,13 +104,9 @@ class ActiveTasks{
                  <button class="active-task__button-count">Licz czas</button>
             
             `
+            div.querySelector('.active-task__button-count').addEventListener('click', (e)=>this.startCount(e))
             this.activeTasksList.appendChild(div);
-          }
-            
-        });
-        if(this.activeTasks.length >1) this.addCountListeners()
-       
-     
+            document
     }
     addCountListeners(){
             const countBtnList = document.querySelectorAll('.active-task__button-count')
@@ -104,6 +135,8 @@ class ActiveTasks{
     }
 
     startCount(e){
+      this.countBtns=document.querySelectorAll('.active-task__button-count');
+      
     this.countBtns.forEach(btn=>btn.disabled=false);
     this.breakBtn.disabled=false;
     e.target.disabled=true;
@@ -178,7 +211,7 @@ class ActiveTasks{
     const warning = document.createElement('div');
     warning.classList.add('warning', 'active');
     warning.innerHTML=`
-   
+
       <h1 class="warning__title">UWAGA !</h1>
       <p class="warning__text">${message}</p>
       <div class="warning__buttons">
@@ -255,10 +288,11 @@ class ActiveTasks{
         this.resetBtn.style.visibility ='hidden';
         this.resetBtn.classList.remove('active');
         localStorage.setItem('activeTasks', JSON.stringify(this.activeTasks));
-        this.populateActiveTasks(this.activeTasks);
+        this.activeTasksList.textContent='';
+        this.activeTasks[0].time=0;
         document.querySelector('.active-tasks__span-work').textContent = `0h 0m`;
         document.querySelector('.active-tasks__span-total').textContent=`0h 0m`;
-        document.querySelector('.active-tasks__span-break').textContent=`0h 0m`;
+        document.querySelector('.active-tasks__span-break').textContent=`00:00:00`;
         
     }
 }
