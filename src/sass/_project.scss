@@ -1,156 +1,151 @@
 .project {
-    background-color: $project-color;
-    box-shadow: 0 0 2px $project-color;
-    position: relative;
-    padding: 5px 0;
-    margin-bottom: 10px;
-    box-shadow: 0 0 6px black;
+  background-color: $project-color;
+  box-shadow: 0 0 2px $project-color;
+  position: relative;
+  padding: 5px 0;
+  margin-bottom: 10px;
+  box-shadow: 0 0 6px black;
 
-    &__container {
-        // min-height: 10%;
-        display: none;
+  &__container {
+    display: none;
+  }
 
+  &__container.open {
+    min-height: 10%;
+    display: block;
+  }
+
+  &__title {
+    display: block;
+    line-height: 3rem;
+    font-size: 1.8rem;
+    padding-left: 10px;
+    width: 85%;
+    overflow-wrap: break-word;
+    font-weight: bold;
+  }
+
+  .expand {
+    position: absolute;
+    right: 5%;
+    top: 10px;
+    transform: rotate(0);
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    transition: $button-transition;
+
+    &:hover {
+      color: gray;
+    }
+  }
+
+  .delete-project {
+    position: absolute;
+    right: 12%;
+    top: 10px;
+    transform: rotate(0);
+    font-size: 1.5rem;
+    color: white;
+    cursor: pointer;
+    transition: $button-transition;
+
+    &:hover {
+      color: red;
+    }
+  }
+
+  .expand.open {
+    transform: rotateX(180deg);
+  }
+
+  &__task-list {
+    width: 100%;
+    font-size: 1.5rem;
+    margin: 15px 0;
+    padding: 0 10px;
+  }
+
+  &__task {
+    display: flex;
+    justify-content: space-between;
+    line-height: 2rem;
+    background-color: $task-color;
+    margin: 5px;
+    padding: 8px;
+    box-shadow: 0 0 2px black;
+  }
+
+  &__task-title {
+    width: 80%;
+    overflow-wrap: break-word;
+  }
+
+  .add {
+    line-height: 2rem;
+    color: lighten(black, 30%);
+    cursor: pointer;
+    transition: $button-transition;
+
+    &:hover {
+      color: green;
+    }
+  }
+
+  .delete-task {
+    color: lighten(black, 30%);
+    cursor: pointer;
+    transition: $button-transition;
+
+    &:hover {
+      color: red;
+    }
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 95px;
+  }
+
+  &__newTaskInp {
+    width: 95%;
+    font-size: 1.5rem;
+    line-height: 2rem;
+    margin: 10px auto;
+    padding: 5px 10px 5px 10px;
+    border: none;
+    border-bottom: 1px solid gray;
+    background-color: transparent;
+
+    &:hover {
+      border-bottom: 2px solid $project-color;
     }
 
-    &__container.open {
-        min-height: 10%;
-        display: block;
-
+    &:hover::placeholder {
+      color: lightgray;
     }
 
-    &__title {
-        display: block;
-        line-height: 3rem;
-        font-size: 1.8rem;
-        padding-left: 10px;
-        width: 85%;
-        overflow-wrap: break-word;
-        font-weight: bold;
+    &:focus {
+      border-bottom: 1px solid black;
     }
+  }
 
-    .expand {
-        position: absolute;
-        right: 5%;
-        top: 10px;
-        transform: rotate(0);
-        font-size: 2rem;
-        color: white;
-        cursor: pointer;
-        transition: $button-transition;
+  &__button {
+    width: 95%;
+    font-family: $font-family;
+    font-size: 1.5rem;
+    border: none;
+    padding: 10px;
+    margin: 0 auto;
+    background-color: darken($project-color, 20%);
+    transition: $button-transition;
+    box-shadow: 0 0 3px black;
 
-        &:hover {
-            color: gray;
-        }
+    &:hover {
+      background-color: darken($project-color, 10%);
+      color: white;
     }
-
-    .delete-project {
-        position: absolute;
-        right: 12%;
-        top: 10px;
-        transform: rotate(0);
-        font-size: 1.5rem;
-        color: white;
-        cursor: pointer;
-        transition: $button-transition;
-
-        &:hover {
-            color: red;
-        }
-    }
-
-
-    .expand.open {
-        transform: rotateX(180deg);
-    }
-
-    &__task-list {
-        width: 100%;
-        font-size: 1.5rem;
-        margin: 15px 0;
-        padding: 0 10px;
-    }
-
-    &__task {
-        display: flex;
-        justify-content: space-between;
-        line-height: 2rem;
-        background-color: $task-color;
-        margin: 5px;
-        padding: 8px;
-        box-shadow: 0 0 2px black;
-    }
-
-    &__task-title {
-        width: 80%;
-        overflow-wrap: break-word;
-    }
-
-    .add {
-        line-height: 2rem;
-        color: lighten(black, 30%);
-        cursor: pointer;
-        transition: $button-transition;
-
-        &:hover {
-            color: green;
-        }
-    }
-
-    .delete-task {
-        color: lighten(black, 30%);
-        cursor: pointer;
-        transition: $button-transition;
-
-        &:hover {
-            color: red;
-            ;
-        }
-    }
-
-    &__form {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        min-height: 95px;
-    }
-
-    &__newTaskInp {
-        width: 95%;
-        font-size: 1.5rem;
-        line-height: 2rem;
-        margin: 10px auto;
-        padding: 5px 10px 5px 10px;
-        border: none;
-        border-bottom: 1px solid gray;
-        background-color: transparent;
-
-        &:hover {
-            border-bottom: 2px solid $project-color;
-        }
-
-        &:hover::placeholder {
-            color: lightgray;
-        }
-
-    }
-
-
-    &__button {
-        width: 95%;
-        font-family: $font-family;
-        font-size: 1.5rem;
-        border: none;
-        padding: 10px;
-        margin: 0 auto;
-        background-color: darken($project-color, 20%);
-        transition: $button-transition;
-        box-shadow: 0 0 3px black;
-
-        &:hover {
-            background-color: darken($project-color, 10%);
-            color: white;
-        }
-
-    }
-
+  }
 }
