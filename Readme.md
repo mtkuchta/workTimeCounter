@@ -4,6 +4,7 @@
 
 Work Time Counter is application for recording the time spent on individual tasks.
 Project and tasks are stored in localStorage. The application is responsive only for desktop, there is no mobile version.
+You can find application demo [here](https://mtkuchta.github.io/workTimeCounter/).
 
 ![Work Time Counter view](./src/images/work_time_counter_view.JPG)
 
@@ -18,8 +19,8 @@ Project and tasks are stored in localStorage. The application is responsive only
 
 To run this project, install it locally using npm:
 
-$ cd ../lorem
-$ npm install
+$ cd ../lorem  
+$ npm install  
 $ npm start
 
 ## How to use Work Time Counter?
